@@ -1,5 +1,5 @@
 {
-  "name": "socket.io-client",
+  "name": "socket.io-client-fixed-types",
   "version": "4.5.4",
   "description": "Realtime application framework client",
   "keywords": [
@@ -19,7 +19,13 @@
   "module": "./build/esm/index.js",
   "exports": {
     "./package.json": "./package.json",
-    "./dist/socket.io.js": "./dist/socket.io.js",
+    "./dist/socket.io.js": {
+      "default": "./dist/socket.io.js",
+      "node": "./dist/socket.io.js",
+      "import": "./dist/socket.io.js",
+      "require": "./dist/socket.io.js",
+      "types": "./dist/index.d.ts"
+    },
     "./dist/socket.io.js.map": "./dist/socket.io.js.map",
     ".": {
       "import": {
@@ -30,7 +36,7 @@
       "types": "./build/esm/index.d.ts"
     }
   },
-  "types": "./build/esm/index.d.ts",
+  "types": "./build/cjs/index.d.ts",
   "dependencies": {
     "@socket.io/component-emitter": "~3.1.0",
     "debug": "~4.3.2",
@@ -80,7 +86,7 @@
     "test:node": "mocha --require ts-node/register --reporter dot --require test/support/hooks.ts --timeout 5000 --exit test/index.ts",
     "test:browser": "ts-node test/browser-runner.ts",
     "test:types": "tsd",
-    "build": "rollup -c support/rollup.config.umd.js && rollup -c support/rollup.config.esm.js && rollup -c support/rollup.config.umd.msgpack.js",
+    "build": "rollup -c support/rollup.config.umd.js && rollup -c support/rollup.config.esm.js && rollup -c support/rollup.config.umd.msgpack.js && tsc --emitDeclarationOnly --declarationDir dist",
     "format:check": "prettier --check \"*.js\" \"lib/**/*.ts\" \"test/**/*.ts\" \"support/**/*.js\"",
     "format:fix": "prettier --write \"*.js\" \"lib/**/*.ts\" \"test/**/*.ts\" \"support/**/*.js\"",
     "prepack": "npm run compile"
